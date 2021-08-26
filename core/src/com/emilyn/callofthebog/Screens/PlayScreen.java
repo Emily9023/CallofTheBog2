@@ -5,7 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -19,6 +21,9 @@ public class PlayScreen implements Screen {
     private Viewport gamePort;
     private Hud hud;
 
+    private TmxMapLoader mapLoader; //loads the map
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer renderer;
 
 
     public PlayScreen(CallofTheBog game){
@@ -26,6 +31,14 @@ public class PlayScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(CallofTheBog.V_WIDTH, CallofTheBog.V_HEIGHT, gameCam);
         hud = new Hud(game.batch);
+
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load("level1.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map);
+        gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0); //usually set at (0,0)
+
+
+
     }
 
     @Override
@@ -33,13 +46,36 @@ public class PlayScreen implements Screen {
 
     }
 
+    public void handleInput(float dt){
+        if (Gdx.input.isTouched()){ //screen is being clicked or anything
+            gameCam.position.x += 100 * dt;
+        }
+
+    }
+
+    public void update(float dt){ //updates any inputs
+        handleInput(dt);
+
+        gameCam.update(); //update changes in the cam
+        renderer.setView(gameCam); //makes the renderer render the gameCam
+
+    }
+
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        update(delta);
+
+
+
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        renderer.render();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined); //what is shown via camera
         hud.stage.draw();
+
+
     }
 
     @Override
