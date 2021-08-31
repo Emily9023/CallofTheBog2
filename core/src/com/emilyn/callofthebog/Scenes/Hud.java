@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.emilyn.callofthebog.CallofTheBog;
@@ -15,7 +16,7 @@ import com.emilyn.callofthebog.CallofTheBog;
 
 import jdk.vm.ci.code.site.Call;
 
-public class Hud {
+public class Hud implements Disposable {
     public Stage stage;
     private Viewport viewport; //seperate for the tangible world
 
@@ -63,4 +64,8 @@ public class Hud {
         stage.addActor(table);//adds table to stage
     }
 
+    @Override
+    public void dispose() {
+        stage.dispose();
+    }
 }

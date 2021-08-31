@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.emilyn.callofthebog.CallofTheBog;
 import com.emilyn.callofthebog.Scenes.Hud;
 import com.emilyn.callofthebog.Sprites.Pengo;
+import com.emilyn.callofthebog.Tools.B2WorldCreator;
 
 public class PlayScreen implements Screen {
     private CallofTheBog game;
@@ -39,7 +40,7 @@ public class PlayScreen implements Screen {
 
     //Box2d varibles
     private World world;
-    private Box2DDebugRenderer b2dr; //grpahical representation of objects and fixtures in the world
+    private Box2DDebugRenderer b2dr; //graphical representation of objects and fixtures in the world
 
 
     //sprites
@@ -73,43 +74,13 @@ public class PlayScreen implements Screen {
 
 
 
-        //create ground bodies/fixtures
-        createFixtures(2);
-
-        //create pipe bodies/fixtures
-        createFixtures(3);
-
-        //create brick bodies/fixtures
-        createFixtures(5);
-
-        //create coin bodies/fixtures
-        createFixtures(4);
+        new B2WorldCreator(world, map);
 
 
 
     }
 
-    public void createFixtures(int layer){
-        BodyDef bdef = new BodyDef(); //what does the body consist of - defines body
-        PolygonShape shape = new PolygonShape(); //shape for fixture
-        FixtureDef fdef = new FixtureDef(); //initialize the fixture
-        Body body;
 
-        for(MapObject object : map.getLayers().get(layer).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody; //defines that the body is static
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / CallofTheBog.PPM, (rect.getY() + rect.getHeight() / 2) / CallofTheBog.PPM); //sets the position of where the body is (position of the rect
-
-            body = world.createBody(bdef); //create a body in the world according to the specifications of bdef
-
-            shape.setAsBox(rect.getWidth() / 2 / CallofTheBog.PPM, rect.getHeight() /2 / CallofTheBog.PPM ); //set shape
-            fdef.shape = shape; //initialize the shpae of the fixture definition
-            body.createFixture(fdef); //sets the fixture of the body according to the specifications of fdef
-
-        }
-
-    }
 
     @Override
     public void show() {
@@ -191,6 +162,11 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        b2dr.dispose();
+        hud.dispose();
 
     }
 }
