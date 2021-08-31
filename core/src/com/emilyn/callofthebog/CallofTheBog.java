@@ -11,6 +11,7 @@ public class CallofTheBog extends Game {
 	public static final int V_WIDTH = 400;
 	public static final int V_HEIGHT = 208;
 	public SpriteBatch batch; //contain that holds images and textures etc. memory intensive so only requires one
+	public static final float PPM = 100;
 
 	@Override
 	public void create () {
