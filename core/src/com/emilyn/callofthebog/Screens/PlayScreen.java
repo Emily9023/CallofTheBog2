@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -30,6 +31,8 @@ import com.emilyn.callofthebog.Tools.B2WorldCreator;
 
 public class PlayScreen implements Screen {
     private CallofTheBog game;
+    private TextureAtlas atlas;
+
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
@@ -51,6 +54,8 @@ public class PlayScreen implements Screen {
 
 
     public PlayScreen(CallofTheBog game){
+        //atlast = new TextureAtlas("backup")
+
         this.game = game;
         gameCam = new OrthographicCamera();
 
@@ -70,7 +75,9 @@ public class PlayScreen implements Screen {
 
         world = new World(new Vector2(0, -10), true); //if sleeping, then no calculations needed
         b2dr = new Box2DDebugRenderer();
-        player= new Pengo(world);
+
+        //create mario in game world
+        player= new Pengo(world, this);
 
 
 
@@ -110,6 +117,8 @@ public class PlayScreen implements Screen {
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
 
+        player.update(dt);
+
         gameCam.position.x = player.b2body.getPosition().x;
 
         gameCam.update(); //update changes in the cam
@@ -132,6 +141,11 @@ public class PlayScreen implements Screen {
 
         //renderer our Box2DDebugLines
         b2dr.render(world, gameCam.combined);
+
+        game.batch.setProjectionMatrix(gameCam.combined);
+        game.batch.begin();
+        player.draw(game.batch);
+        game.batch.end();
 
         //Set our batch to now draw what the Hud camera seets
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined); //what is shown via camera
