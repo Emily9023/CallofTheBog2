@@ -37,8 +37,6 @@ public class Hud implements Disposable {
         timeCount = 0;
         score = 0;
 
-
-
         viewport = new FitViewport(CallofTheBog.V_WIDTH, CallofTheBog.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
