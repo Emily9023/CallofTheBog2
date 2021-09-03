@@ -49,8 +49,9 @@ public class PlayScreen implements Screen {
     //sprites
     private Pengo player;
 
-    public Vector2 maxPengoSpeed = new Vector2(2, 0);
-    public Vector2 MovementVector = new Vector2(0.1f, 4f);
+    public Vector2 maxPengoSpeed = new Vector2(2, 2);
+    public Vector2 MovementVector = new Vector2(0.001f, .3f);
+    public Vector2 WorldForces = new Vector2(0, 0);
 
 
     public PlayScreen(CallofTheBog game){
@@ -73,7 +74,7 @@ public class PlayScreen implements Screen {
         //initially set our gamcacm to be centered correctly at the start of the game
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0); //usually set at (0,0)
 
-        world = new World(new Vector2(0, -10), true); //if sleeping, then no calculations needed
+        world = new World(new Vector2(WorldForces.x, WorldForces.y), true); //if sleeping, then no calculations needed
         b2dr = new Box2DDebugRenderer();
 
         //create mario in game world
@@ -82,8 +83,6 @@ public class PlayScreen implements Screen {
 
 
         new B2WorldCreator(world, map);
-
-
 
     }
 
@@ -95,19 +94,15 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float dt){
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){ //screen is being clicked or anything
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && player.b2body.getLinearVelocity().y <= maxPengoSpeed.y){ //screen is being clicked or anything
             player.b2body.applyLinearImpulse(new Vector2(0, MovementVector.y), player.b2body.getWorldCenter(), true);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= maxPengoSpeed.x){ //screen is being clicked or anything
-            player.b2body.applyLinearImpulse(new Vector2(MovementVector.x, 0), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && player.b2body.getLinearVelocity().y >= -maxPengoSpeed.y){ //screen is being clicked or anything
+            player.b2body.applyLinearImpulse(new Vector2(0, -MovementVector.y), player.b2body.getWorldCenter(), true);
         }
 
-
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -maxPengoSpeed.x){ //screen is being clicked or anything
-            player.b2body.applyLinearImpulse(new Vector2(-MovementVector.x, 0), player.b2body.getWorldCenter(), true);
-        }
-
+        player.b2body.applyLinearImpulse(new Vector2(MovementVector.x, 0), player.b2body.getWorldCenter(), true);
 
     }
 
