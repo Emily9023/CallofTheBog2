@@ -28,6 +28,7 @@ import com.emilyn.callofthebog.CallofTheBog;
 import com.emilyn.callofthebog.Scenes.Hud;
 import com.emilyn.callofthebog.Sprites.Pengo;
 import com.emilyn.callofthebog.Tools.B2WorldCreator;
+import com.emilyn.callofthebog.Tools.WorldContactListener;
 
 public class PlayScreen implements Screen {
     private CallofTheBog game;
@@ -80,7 +81,10 @@ public class PlayScreen implements Screen {
         //create mario in game world
         player= new Pengo(world, this);
 
-        
+
+        new B2WorldCreator(world, map);
+
+        world.setContactListener(new WorldContactListener());
 
     }
 

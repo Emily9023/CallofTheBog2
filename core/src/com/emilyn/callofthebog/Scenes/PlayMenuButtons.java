@@ -72,5 +72,7 @@ public class PlayMenuButtons implements Disposable {
     @Override
     public void dispose() {
 
+        stage.dispose();
+
     }
 }
