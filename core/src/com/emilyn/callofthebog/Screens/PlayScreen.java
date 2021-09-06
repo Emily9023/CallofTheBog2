@@ -1,5 +1,7 @@
 package com.emilyn.callofthebog.Screens;
 
+import static java.lang.Math.pow;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -30,9 +32,14 @@ import com.emilyn.callofthebog.Sprites.Pengo;
 import com.emilyn.callofthebog.Tools.B2WorldCreator;
 import com.emilyn.callofthebog.Tools.WorldContactListener;
 
+import jdk.vm.ci.code.site.Call;
+
 public class PlayScreen implements Screen {
     private CallofTheBog game;
     private TextureAtlas atlas;
+
+    private float speedAccelerator = 1.001f;
+    private float speedAcceleratorPower = 0;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -50,8 +57,8 @@ public class PlayScreen implements Screen {
     //sprites
     private Pengo player;
 
-    public Vector2 maxPengoSpeed = new Vector2(2, 2);
-    public Vector2 MovementVector = new Vector2(0.001f, .3f);
+    public Vector2 maxPengoSpeed = new Vector2(1, 1);
+    public Vector2 MovementVector = new Vector2(0.3f, .3f);
     public Vector2 WorldForces = new Vector2(0, 0);
 
 
@@ -69,22 +76,25 @@ public class PlayScreen implements Screen {
 
         //load our map and setup our map renderer
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("level1.tmx");
+        map = mapLoader.load("Maps/racer3.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,  1 / CallofTheBog.PPM);
 
-        //initially set our gamcacm to be centered correctly at the start of the game
-        gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0); //usually set at (0,0)
+
+        //initially set our gamecam to be centered correctly at the start of the game
+        gameCam.position.set(0, gamePort.getWorldHeight()/2, 0); //usually set at (0,0)
 
         world = new World(new Vector2(WorldForces.x, WorldForces.y), true); //if sleeping, then no calculations needed
         b2dr = new Box2DDebugRenderer();
 
+
         //create mario in game world
         player= new Pengo(world, this);
-
 
         new B2WorldCreator(world, map);
 
         world.setContactListener(new WorldContactListener());
+
+
 
     }
 
@@ -104,7 +114,16 @@ public class PlayScreen implements Screen {
             player.b2body.applyLinearImpulse(new Vector2(0, -MovementVector.y), player.b2body.getWorldCenter(), true);
         }
 
-        player.b2body.applyLinearImpulse(new Vector2(MovementVector.x, 0), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().y >= -maxPengoSpeed.x){ //screen is being clicked or anything
+            player.b2body.applyLinearImpulse(new Vector2(.1f, 0), player.b2body.getWorldCenter(), true);
+        }
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().y >= -maxPengoSpeed.x){ //screen is being clicked or anything
+            player.b2body.applyLinearImpulse(new Vector2(-.1f, 0), player.b2body.getWorldCenter(), true);
+        }
+
+        //player.b2body.applyLinearImpulse(new Vector2(MovementVector.x, 0), player.b2body.getWorldCenter(), true);
 
     }
 
@@ -116,7 +135,11 @@ public class PlayScreen implements Screen {
 
         player.update(dt);
 
-        gameCam.position.x = player.b2body.getPosition().x;
+        speedAcceleratorPower ++;
+
+        gameCam.position.x = (float) (gameCam.position.x + (1/ CallofTheBog.PPM) * pow(speedAccelerator, speedAcceleratorPower));
+
+
 
         gameCam.update(); //update changes in the cam
         renderer.setView(gameCam); //makes the renderer render the gameCam

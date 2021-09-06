@@ -21,11 +21,13 @@ public class Pengo extends Sprite {
     public Body b2body;
     private TextureRegion img;
 
+    private int pengoSize = 7;
+
     public Pengo(World world, PlayScreen Screen){
 
         this.world = world;
         definePengo();
-        TextureRegion img = new TextureRegion(new Texture("backup fabric.png"));
+        TextureRegion img = new TextureRegion(new Texture("Pengo/backup fabric.png"));
         setRegion(img);
     }
 
@@ -41,13 +43,16 @@ public class Pengo extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / CallofTheBog.PPM);
+        shape.setRadius(pengoSize / CallofTheBog.PPM);
+        fdef.filter.categoryBits = CallofTheBog.MARIO_BIT;
+        fdef.filter.maskBits = CallofTheBog.DEFAULT_BIT | CallofTheBog.BRICK_BIT | CallofTheBog.COIN_BIT;
+
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
 
         EdgeShape head = new EdgeShape();
-        head.set(new Vector2(7 / CallofTheBog.PPM, -2 / CallofTheBog.PPM), new Vector2(7 / CallofTheBog.PPM, 2 / CallofTheBog.PPM));
+        head.set(new Vector2(pengoSize/ CallofTheBog.PPM, -2 / CallofTheBog.PPM), new Vector2(pengoSize/ CallofTheBog.PPM, 2 / CallofTheBog.PPM));
         fdef.shape = head;
         fdef.isSensor = true;
 

@@ -9,10 +9,16 @@ import com.emilyn.callofthebog.Screens.PlayMenu;
 import com.emilyn.callofthebog.Screens.PlayScreen;
 
 public class CallofTheBog extends Game {
-	public static final int V_WIDTH = 400;
-	public static final int V_HEIGHT = 208;
+	public static final int V_WIDTH = 1600;
+	public static final int V_HEIGHT = 390;
 	public SpriteBatch batch; //contain that holds images and textures etc. memory intensive so only requires one
 	public static final float PPM = 100;
+
+	public static final short DEFAULT_BIT = 1;
+	public static final short MARIO_BIT = 2;
+	public static final short BRICK_BIT = 4;
+	public static final short COIN_BIT = 8;
+	public static final short DESTROYED_BIT = 16;
 
 	@Override
 	public void create () {
