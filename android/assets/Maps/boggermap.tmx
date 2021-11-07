@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="143">
+ <tileset firstgid="1" source="tileset_gutter.tsx"/>
+ <tileset firstgid="925" source="Snow gate.tsx"/>
+ <tileset firstgid="1135" source="evil prite2.tsx"/>
+ <layer id="1" name="background" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzt0rEJgFAAQ8FfOIb7z2lvHwPxHtwCIfd1zg0/sFh7U/jaUu0tIW259raQtlx7W0hbrr0tpC3X3hbSlmtvC2nLtbeFtOXa20Lacu1tIW259raQ9v75Uu1t4UtrPY4lLjA=
+  </data>
+ </layer>
+ <layer id="2" name="graphics" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzt2sENhCAQheGR7UTtxBrsYPuvYfFgQoy6M4MRkf9LXmKEg5cXQJ1EZCKkkaBuc+kHACrTBZEQ8wmln4T+AlZ97O0QMyb9/Z4kpZ2nRX/Run/d0YwfzUnHtPMs5s21NgB0vdOusZ4Ob/sLtMranaO+5d6z7Kk96y+Afda11nvuXVn7SH/RAk+vPGfd3A7TX8DnqnfNOe+krftl+os38Zx5F0/6BmxBf4H9b8A1oL94stL/oxJyZ97mB45okA8=
+  </data>
+ </layer>
+ <objectgroup id="3" name="walls">
+  <object id="4" x="0" y="192" width="3838.67" height="16"/>
+  <object id="26" x="0" y="0" width="3839.33" height="14.6667"/>
+ </objectgroup>
+ <objectgroup id="7" name="boulder">
+  <object id="106" x="432.5" y="96" width="30" height="15"/>
+  <object id="107" x="449.5" y="81.5" width="30" height="15"/>
+  <object id="108" x="464.5" y="64.5" width="30" height="15"/>
+  <object id="109" x="577.5" y="64.5" width="30" height="15"/>
+  <object id="110" x="625.5" y="64.5" width="30" height="15"/>
+  <object id="111" x="496.5" y="127.5" width="30" height="15"/>
+  <object id="112" x="511.5" y="112.5" width="46" height="15"/>
+  <object id="113" x="546.5" y="128.5" width="30" height="15"/>
+  <object id="114" x="657.5" y="127.5" width="30" height="15"/>
+  <object id="115" x="704.5" y="129.5" width="30" height="15"/>
+  <object id="116" x="672.5" y="111.5" width="47" height="15"/>
+  <object id="117" x="592.5" y="81.5" width="46" height="15"/>
+  <object id="118" x="481.5" y="48.5" width="110" height="15"/>
+  <object id="119" x="640.5" y="49.5" width="110" height="15"/>
+  <object id="120" x="433.5" y="143.5" width="78" height="15"/>
+  <object id="121" x="560.5" y="143.5" width="110" height="15"/>
+  <object id="122" x="721.5" y="144.5" width="110" height="15"/>
+  <object id="123" x="769.5" y="97.5" width="62" height="15"/>
+  <object id="124" x="737.5" y="65.5" width="30" height="15"/>
+  <object id="125" x="752.5" y="81.5" width="30" height="15"/>
+  <object id="126" x="608.5" y="97.5" width="14" height="15"/>
+  <object id="127" x="689.5" y="95.5" width="14" height="15"/>
+  <object id="128" x="529.5" y="96.5" width="14" height="15"/>
+  <object id="129" x="209" y="64.5" width="14" height="15"/>
+  <object id="130" x="241" y="95.5" width="14" height="15"/>
+  <object id="131" x="336" y="62.5" width="14" height="15"/>
+  <object id="132" x="289" y="127.5" width="14" height="15"/>
+  <object id="133" x="192" y="160.5" width="14" height="15"/>
+  <object id="134" x="386" y="160.5" width="14" height="15"/>
+  <object id="136" x="960" y="144" width="143.333" height="15.3333"/>
+  <object id="138" x="1024" y="96.3333" width="143.666" height="15.3333"/>
+  <object id="139" x="1024.17" y="64.3333" width="159.666" height="15.3333"/>
+  <object id="140" x="1008.5" y="64.3333" width="15.9993" height="47.3333"/>
+  <object id="141" x="960" y="15.3333" width="15.9993" height="128.667"/>
+  <object id="142" x="1151.67" y="96.6665" width="15.9993" height="95.667"/>
+ </objectgroup>
+ <objectgroup id="5" name="donthit">
+  <object id="27" x="400" y="32" width="47" height="30"/>
+  <object id="28" x="416" y="160" width="47" height="30"/>
+ </objectgroup>
+</map>

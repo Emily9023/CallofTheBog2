@@ -38,7 +38,7 @@ public class PlayScreen implements Screen {
     private CallofTheBog game;
     private TextureAtlas atlas;
 
-    private float speedAccelerator = 1.001f;
+    private float speedAccelerator = 1.003f;
     private float speedAcceleratorPower = 0;
 
     private OrthographicCamera gameCam;
@@ -76,7 +76,7 @@ public class PlayScreen implements Screen {
 
         //load our map and setup our map renderer
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("Maps/racer3.tmx");
+        map = mapLoader.load("Maps/boggermap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,  1 / CallofTheBog.PPM);
 
 
