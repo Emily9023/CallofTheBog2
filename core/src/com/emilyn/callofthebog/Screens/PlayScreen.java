@@ -63,7 +63,7 @@ public class PlayScreen implements Screen {
 
 
     public PlayScreen(CallofTheBog game){
-        //atlast = new TextureAtlas("backup")
+        atlas = new TextureAtlas("Pengo.pack");
 
         this.game = game;
         gameCam = new OrthographicCamera();
@@ -99,6 +99,10 @@ public class PlayScreen implements Screen {
     }
 
 
+    public TextureAtlas getAtlas(){
+        return atlas;
+
+    }
 
     @Override
     public void show() {
@@ -135,10 +139,10 @@ public class PlayScreen implements Screen {
 
         player.update(dt);
 
+
         speedAcceleratorPower ++;
 
         gameCam.position.x = (float) (gameCam.position.x + (1/ CallofTheBog.PPM) * pow(speedAccelerator, speedAcceleratorPower));
-
 
 
         gameCam.update(); //update changes in the cam
@@ -162,9 +166,10 @@ public class PlayScreen implements Screen {
         //renderer our Box2DDebugLines
         b2dr.render(world, gameCam.combined);
 
-        game.batch.setProjectionMatrix(gameCam.combined);
+
+        game.batch.setProjectionMatrix(gameCam.combined); //setting what the game can see
         game.batch.begin();
-        player.draw(game.batch);
+        player.draw(game.batch); //drawing the character onto the screen
         game.batch.end();
 
         //Set our batch to now draw what the Hud camera seets
