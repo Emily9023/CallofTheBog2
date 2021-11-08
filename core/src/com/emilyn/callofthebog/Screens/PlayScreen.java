@@ -38,7 +38,7 @@ public class PlayScreen implements Screen {
     private CallofTheBog game;
     private TextureAtlas atlas;
 
-    private float speedAccelerator = 1.003f;
+    private float speedAccelerator = 1.001f;
     private float speedAcceleratorPower = 0;
 
     private OrthographicCamera gameCam;
