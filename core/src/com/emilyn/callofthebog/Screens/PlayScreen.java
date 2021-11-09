@@ -57,7 +57,7 @@ public class PlayScreen implements Screen {
     //sprites
     private Pengo player;
 
-    public Vector2 maxPengoSpeed = new Vector2(1, 1);
+    public Vector2 maxPengoSpeed = new Vector2(1.7f, 1.7f);
     public Vector2 MovementVector = new Vector2(0.3f, .3f);
     public Vector2 WorldForces = new Vector2(0, 0);
 
@@ -118,13 +118,13 @@ public class PlayScreen implements Screen {
             player.b2body.applyLinearImpulse(new Vector2(0, -MovementVector.y), player.b2body.getWorldCenter(), true);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().y >= -maxPengoSpeed.x){ //screen is being clicked or anything
-            player.b2body.applyLinearImpulse(new Vector2(.1f, 0), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= maxPengoSpeed.x){ //screen is being clicked or anything
+            player.b2body.applyLinearImpulse(new Vector2(MovementVector.x, 0), player.b2body.getWorldCenter(), true);
         }
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().y >= -maxPengoSpeed.x){ //screen is being clicked or anything
-            player.b2body.applyLinearImpulse(new Vector2(-.1f, 0), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -maxPengoSpeed.x){ //screen is being clicked or anything
+            player.b2body.applyLinearImpulse(new Vector2(-MovementVector.x, 0), player.b2body.getWorldCenter(), true);
         }
 
         //player.b2body.applyLinearImpulse(new Vector2(MovementVector.x, 0), player.b2body.getWorldCenter(), true);
