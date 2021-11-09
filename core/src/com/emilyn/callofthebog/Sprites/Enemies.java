@@ -10,8 +10,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.emilyn.callofthebog.CallofTheBog;
 
 
-public class Evil extends InteractiveTileObject{
-    public Evil(World world, TiledMap map, Rectangle bounds){
+public class Enemies extends InteractiveTileObject{
+    public Enemies(World world, TiledMap map, Rectangle bounds){
         super(world, map, bounds);
         fixture.setUserData(this);
         setCategoryFilter(CallofTheBog.COIN_BIT);

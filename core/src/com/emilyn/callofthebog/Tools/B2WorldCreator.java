@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.emilyn.callofthebog.CallofTheBog;
 import com.emilyn.callofthebog.Sprites.Boulder;
-import com.emilyn.callofthebog.Sprites.Evil;
+import com.emilyn.callofthebog.Sprites.Enemies;
 
 public class B2WorldCreator {
     public B2WorldCreator(World world, TiledMap map){
@@ -48,7 +48,7 @@ public class B2WorldCreator {
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            new Evil(world, map, rect);
+            new Enemies(world, map, rect);
 
         }
 
