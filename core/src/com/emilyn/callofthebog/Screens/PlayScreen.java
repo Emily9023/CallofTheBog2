@@ -38,12 +38,13 @@ public class PlayScreen implements Screen {
     private CallofTheBog game;
     private TextureAtlas atlas;
 
-    private float speedAccelerator = 1.001f;
+    private float speedAccelerator = 1.002f;
     private float speedAcceleratorPower = 0;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
+    private int[] scores;
 
     private TmxMapLoader mapLoader; //loads the map
     private TiledMap map;
@@ -82,6 +83,7 @@ public class PlayScreen implements Screen {
 
         //initially set our gamecam to be centered correctly at the start of the game
         gameCam.position.set(0, gamePort.getWorldHeight()/2, 0); //usually set at (0,0)
+
 
         world = new World(new Vector2(WorldForces.x, WorldForces.y), true); //if sleeping, then no calculations needed
         b2dr = new Box2DDebugRenderer();
@@ -147,6 +149,8 @@ public class PlayScreen implements Screen {
         gameCam.position.x = (float) (gameCam.position.x + (1/ CallofTheBog.PPM) * pow(speedAccelerator, speedAcceleratorPower));
 
 
+        hud.update(dt, gameCam.position.x);
+
         gameCam.update(); //update changes in the cam
         renderer.setView(gameCam); //makes the renderer render the gameCam
 
@@ -154,6 +158,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+
         //seperate our update logive from render
         update(delta);
 
@@ -178,11 +184,12 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined); //what is shown via camera
         hud.stage.draw();
 
+        scores = hud.getScores();
+
         if (gameOver()){
-            game.setScreen(new GameOverScreen(game));
+            game.setScreen(new GameOverScreen(game, scores));
             dispose();
         }
-
 
     }
 
@@ -190,7 +197,6 @@ public class PlayScreen implements Screen {
         if(player.currentState == Pengo.State.DEAD){ //add timer after Nov 12
             return true;
         }
-
         return false;
 
     }

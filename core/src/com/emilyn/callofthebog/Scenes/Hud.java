@@ -33,7 +33,7 @@ public class Hud implements Disposable {
 
 
     public Hud(SpriteBatch sb){
-        worldTimer = 300;
+        worldTimer = 0;
         timeCount = 0;
         score = 0;
 
@@ -62,9 +62,36 @@ public class Hud implements Disposable {
         stage.addActor(table);//adds table to stage
     }
 
+    public void update(float dt, float distance) {
+        timeCount += dt;
+
+        //bigger than one second then increment worldtimer by one sec
+        if (timeCount >= 1){
+            worldTimer++;
+
+            countdownLabel.setText(String.format("%03d", worldTimer));
+            timeCount = 0;
+        }
+
+
+        score = (int) distance;
+        scoreLabel.setText(String.format("%06d", score));
+
+    }
+
+
+
     @Override
     public void dispose() {
 
         stage.dispose();
+    }
+
+    public int[] getScores() {
+
+        int[] scores = new int[]{score, worldTimer};
+
+        return scores;
+
     }
 }
