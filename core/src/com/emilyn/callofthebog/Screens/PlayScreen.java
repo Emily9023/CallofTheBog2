@@ -148,6 +148,7 @@ public class PlayScreen implements Screen {
 
         gameCam.position.x = (float) (gameCam.position.x + (1/ CallofTheBog.PPM) * pow(speedAccelerator, speedAcceleratorPower));
 
+        maxPengoSpeed = new Vector2((float) pow(maxPengoSpeed.x, 1.001), (float) pow(maxPengoSpeed.y, 1.001));
 
         hud.update(dt, gameCam.position.x);
 
