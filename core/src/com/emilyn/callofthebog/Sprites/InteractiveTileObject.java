@@ -39,7 +39,7 @@ public abstract class InteractiveTileObject {
         body = world.createBody(bdef); //create a body in the world according to the specifications of bdef
 
         shape.setAsBox(bounds.getWidth() / 2 / CallofTheBog.PPM, bounds.getHeight() /2 / CallofTheBog.PPM ); //set shape
-        fdef.shape = shape; //initialize the shpae of the fixture definition
+        fdef.shape = shape; //initialize the shape of the fixture definition
         fixture = body.createFixture(fdef); //sets the fixture of the body according to the specifications of fdef
 
 

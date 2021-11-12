@@ -1,5 +1,6 @@
 package com.emilyn.callofthebog.Sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -15,7 +17,7 @@ import com.emilyn.callofthebog.CallofTheBog;
 import com.emilyn.callofthebog.Screens.PlayScreen;
 
 public class Pengo extends Sprite {
-    public enum State {RUNNING, STANDING};
+    public enum State {DEAD, RUNNING, STANDING};
     public State currentState;
     public State previousState; //previousState is not used atm but may be implemented later (Nov 7th 2021)
 
@@ -25,14 +27,19 @@ public class Pengo extends Sprite {
     private TextureRegion PengoStanding;
     private Animation PengoRun;
     private float stateTimer;
+    public boolean pengoIsDead;
 
     //not used rn but might be implemented later (November 7th)
     private boolean runningRight;
+
+    //set death to false until hit evil
+    public boolean destroyed = false;
 
 
     private TextureRegion img;
 
     private int pengoSize = 7;
+
 
     public Pengo(World world, PlayScreen screen){
         super(screen.getAtlas().findRegion("PengoRunning_Spritesheet"));
@@ -41,6 +48,8 @@ public class Pengo extends Sprite {
         stateTimer = 0;
 
         runningRight = true; // not used atm may be implemented later (Nov 7th)
+
+
 
 
         this.world = world;
@@ -60,8 +69,26 @@ public class Pengo extends Sprite {
     }
 
     public void update(float dt){
+        //checks if pengo is dead
+        if (destroyed){
+
+            Gdx.app.log("PENGO", "has died");
+            die();
+        }
         setPosition(b2body.getPosition().x - getWidth() /2, b2body.getPosition().y - getWidth() /2);
         setRegion(getFrame(dt));
+    }
+
+    private void die() {
+        if(!isDEAD()){
+            pengoIsDead = true;
+        }
+    }
+
+    public boolean isDEAD(){
+
+        return pengoIsDead;
+
     }
 
     public TextureRegion getFrame(float dt){
@@ -92,8 +119,13 @@ public class Pengo extends Sprite {
         return region;
     }
 
+    //determines what the state of movement of pengo
     public State getState(){
-        if(b2body.getLinearVelocity().x != 0)
+
+        if(pengoIsDead){
+            return State.DEAD;
+        }
+        else if(b2body.getLinearVelocity().x != 0)
             return State.RUNNING;
         else
             return State.STANDING;
@@ -108,22 +140,27 @@ public class Pengo extends Sprite {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(pengoSize / CallofTheBog.PPM);
-        fdef.filter.categoryBits = CallofTheBog.MARIO_BIT;
-        fdef.filter.maskBits = CallofTheBog.DEFAULT_BIT | CallofTheBog.BRICK_BIT | CallofTheBog.COIN_BIT;
+        fdef.filter.categoryBits = CallofTheBog.PENGO_BIT;
+        fdef.filter.maskBits = CallofTheBog.DEFAULT_BIT | CallofTheBog.BOULDER_BIT | CallofTheBog.EVIL_BIT;
 
 
         fdef.shape = shape;
-        b2body.createFixture(fdef);
+        b2body.createFixture(fdef).setUserData(this);
+/*
 
-        EdgeShape head = new EdgeShape();
-        head.set(new Vector2(pengoSize/ CallofTheBog.PPM, -2 / CallofTheBog.PPM), new Vector2(pengoSize/ CallofTheBog.PPM, 2 / CallofTheBog.PPM));
-        fdef.shape = head;
+        EdgeShape body = new EdgeShape();
+        body.set(new Vector2(pengoSize/ CallofTheBog.PPM, pengoSize/ CallofTheBog.PPM), new Vector2(pengoSize/ CallofTheBog.PPM, pengoSize/ CallofTheBog.PPM));
+        fdef.shape = body;
         fdef.isSensor = true;
 
-        b2body.createFixture(fdef).setUserData("head");
-
+        b2body.createFixture(fdef).setUserData("body");
+*/
     }
 
+    public void onHit(){
+        Gdx.app.log("PENGO", "hit");
+        destroyed = true;
+    }
 
 
 }

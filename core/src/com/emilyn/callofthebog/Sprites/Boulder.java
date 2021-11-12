@@ -12,7 +12,7 @@ public class Boulder extends InteractiveTileObject{
         super(world, map, bounds);
 
         fixture.setUserData(this);
-        setCategoryFilter(CallofTheBog.BRICK_BIT);
+        setCategoryFilter(CallofTheBog.BOULDER_BIT);
 
 
     }

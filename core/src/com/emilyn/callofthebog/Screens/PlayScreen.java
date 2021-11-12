@@ -92,6 +92,8 @@ public class PlayScreen implements Screen {
 
         new B2WorldCreator(world, map);
 
+
+        //calls contact
         world.setContactListener(new WorldContactListener());
 
 
@@ -176,6 +178,20 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined); //what is shown via camera
         hud.stage.draw();
 
+        if (gameOver()){
+            game.setScreen(new GameOverScreen(game));
+            dispose();
+        }
+
+
+    }
+
+    private boolean gameOver() {
+        if(player.currentState == Pengo.State.DEAD){ //add timer after Nov 12
+            return true;
+        }
+
+        return false;
 
     }
 
