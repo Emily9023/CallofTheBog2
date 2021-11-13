@@ -187,6 +187,10 @@ public class PlayScreen implements Screen {
 
         scores = hud.getScores();
 
+        if (player.b2body.getPosition().x >= 38){
+            game.setScreen(new WinScreen(game, scores));
+            dispose();
+        }
         if (gameOver()){
             game.setScreen(new GameOverScreen(game, scores));
             dispose();

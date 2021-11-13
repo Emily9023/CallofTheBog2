@@ -65,7 +65,7 @@ public class Hud implements Disposable {
     public void update(float dt, float distance) {
         timeCount += dt;
 
-        //bigger than one second then increment worldtimer by one sec
+        //bigger than one second then increment world timer by one sec
         if (timeCount >= 1){
             worldTimer++;
 
