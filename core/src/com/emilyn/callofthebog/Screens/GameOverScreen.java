@@ -22,7 +22,7 @@ public class GameOverScreen implements Screen {
 
     private Game game;
 
-    public GameOverScreen(Game game, int[] scores){
+    public GameOverScreen(Game game, double[] scores){
         this.game = game;
         viewport = new FitViewport(CallofTheBog.V_WIDTH, CallofTheBog.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((CallofTheBog) game).batch);
@@ -34,8 +34,8 @@ public class GameOverScreen implements Screen {
         table.setFillParent(true);
 
         Label gameOverLabel = new Label("GAME OVER", font);
-        Label distanceLabel = new Label("Distance: "+scores[0], font);
-        Label timeLabel = new Label("Time Survived: "+scores[1], font);
+        Label distanceLabel = new Label(String.format("Distance: %,.2f", scores[0]), font);
+        Label timeLabel = new Label(String.format("Time Survived %,.2f", scores[1]), font);
         Label playAgainLabel = new Label("Click to Play Again", font);
 
         table.add(gameOverLabel).expandX();

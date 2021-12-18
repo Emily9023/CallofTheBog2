@@ -21,8 +21,9 @@ public class Hud implements Disposable {
     private Viewport viewport; //seperate for the tangible world
 
     private Integer worldTimer;
+    private double worldTimertest;
     private float timeCount;
-    private Integer score;
+    private double score;
 
     Label countdownLabel;
     Label scoreLabel;
@@ -44,8 +45,8 @@ public class Hud implements Disposable {
         table.top();
         table.setFillParent(true);
 
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        countdownLabel = new Label(String.format("%,.2f", worldTimertest), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel = new Label(String.format("%,.2f", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -66,16 +67,17 @@ public class Hud implements Disposable {
         timeCount += dt;
 
         //bigger than one second then increment world timer by one sec
-        if (timeCount >= 1){
-            worldTimer++;
 
-            countdownLabel.setText(String.format("%03d", worldTimer));
+        if (timeCount >= 0.01){
+            worldTimertest= worldTimertest + 0.01;
+
+            countdownLabel.setText(String.format("%,.2f", worldTimertest));
             timeCount = 0;
         }
 
+        score = distance;
 
-        score = (int) distance;
-        scoreLabel.setText(String.format("%06d", score));
+        scoreLabel.setText(String.format("%,.2f", distance));
 
     }
 
@@ -87,9 +89,9 @@ public class Hud implements Disposable {
         stage.dispose();
     }
 
-    public int[] getScores() {
+    public double[] getScores() {
 
-        int[] scores = new int[]{score, worldTimer};
+        double[] scores = new double[]{score, worldTimertest};
 
         return scores;
 

@@ -20,7 +20,7 @@ public class WinScreen implements Screen {
 
     private Game game;
 
-    public WinScreen(Game game, int[] scores){
+    public WinScreen(Game game, double[] scores){
         this.game = game;
         viewport = new FitViewport(CallofTheBog.V_WIDTH, CallofTheBog.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((CallofTheBog) game).batch);

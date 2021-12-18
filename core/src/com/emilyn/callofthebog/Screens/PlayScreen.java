@@ -44,7 +44,7 @@ public class PlayScreen implements Screen {
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
-    private int[] scores;
+    private double[] scores;
 
     private TmxMapLoader mapLoader; //loads the map
     private TiledMap map;
@@ -191,7 +191,7 @@ public class PlayScreen implements Screen {
             game.setScreen(new WinScreen(game, scores));
             dispose();
         }
-        if (gameOver()){
+        if (gameOver() || player.b2body.getPosition().x <= gameCam.position.x-gamePort.getWorldWidth()*.65){
             game.setScreen(new GameOverScreen(game, scores));
             dispose();
         }
