@@ -90,6 +90,9 @@ com_crashlytics_export_strings.xml
 nbactions.xml
 nb-configuration.xml
 
+## vscode
+.vscode
+
 ## Gradle
 
 /local.properties
@@ -101,6 +104,7 @@ gradle-app.setting
 /desktop/build/
 /html/build/
 /ios/build/
+versions.json
 
 ## OS Specific
 .DS_Store
